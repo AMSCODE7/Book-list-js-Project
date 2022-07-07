@@ -1,10 +1,10 @@
 // book class - represens a book
 
-class book {
-    constructor(Title,Author,SerialNo) {
-        this.Title = Title;
-        this.Author = Author;
-        this.SerialNo = SerialNo;
+class Book {
+    constructor(title,author,serialNo) {
+        this.title = title;
+        this.author = author;
+        this.serialNo = serialNo;
     }
 }
 
@@ -26,19 +26,31 @@ class UI {
         ];
         const books = storedBooks;
 
-        books.forEach((book) => UI.addBookToList(book));
+        books.forEach((Book) => UI.addBookToList(Book));
     }
-    static addBookToList(book) {
+    static addBookToList(_Book) {
         const list = document.querySelector('#book-list');
         const row = document.createElement('tr');
         row.innerHTML = `
-        <td>${book.title}</td>
-        <td>${book.author}</td>
-        <td>${book.serialNo}</td>
+        <td>${Book.title}</td>
+        <td>${Book.author}</td>
+        <td>${Book.serialNo}</td>
         <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
         `;
 
         list.appendChild(row);
+    }
+    static deleteBook(el){
+        if(el.classList.contains('delete')) {
+            el.parentElement.parentElement.remove();
+        }
+
+    }
+
+    static clearFields() {
+        document.querySelector('#title').value = '';
+        document.querySelector('#author').value = '';
+        document.querySelector('#serialNo').value = '';
     }
 }
 
@@ -62,11 +74,20 @@ document.querySelector('#book-form').addEventListener('submit', (e)=> {
     const serialNo = document.querySelector('#serialNo').value;
 
     // instatiate book
-    const book = new book(title,author,serialNo);
+    const book = new Book(title,author,serialNo);
 
-    console.log(book)
+    // add book to UI
+    UI.addBookToList(book);
+
+    // clear fields
+    UI.clearFields();
 
 });
 
 // event : remove a book
+
+document.querySelector('#booklist').addEventListener('click', (e) =>
+ {
+    UI.deleteBook(e.target)
+});
 
