@@ -91,3 +91,5 @@ document.querySelector('#booklist').addEventListener('click', (e) =>
     UI.deleteBook(e.target)
 });
 
+
+// almost done few function pending.....
